@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
     let query = sb.from("messages").select("id, text, recipient, created_at").eq("deleted", false);
     if (recipient) {
       // ILIKE contains match
-      query = query.ilike("recipient", f"%{recipient}%");
+      query = query.ilike("recipient", `%${recipient}%`);
     }
     const { data, error } = await query.order("created_at", { ascending: false }).limit(100);
     if (error) throw error;
